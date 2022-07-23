@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import withStyles from '@material-ui/styles/withStyles';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import Typography from '@material-ui/core/Typography';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import withStyles from "@material-ui/styles/withStyles";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import Typography from "@material-ui/core/Typography";
+import { Link, withRouter } from "react-router-dom";
 
-const styles = theme => ({
+const styles = (theme) => ({
   link: {
-    textDecoration: 'none',
-    color: 'inherit'
+    textDecoration: "none",
+    color: "inherit"
   },
   text: {
-    display: 'inline-block',
-    verticalAlign: 'text-bottom'
+    display: "inline-block",
+    verticalAlign: "text-bottom"
   }
 });
 
@@ -21,13 +21,13 @@ class Back extends Component {
     return (
       <div>
         <Typography variant="h6" gutterBottom>
-          <Link className={classes.link} to={{ pathname: "/dashboard" }}>
+          <Link className={classes.link} to={{ pathname: "/" }}>
             <KeyboardArrowLeft />
-            <span className={classes.text}>Back to Dashboard</span>
+            <span className={classes.text}>返回</span>
           </Link>
         </Typography>
       </div>
-    )
+    );
   }
 }
 

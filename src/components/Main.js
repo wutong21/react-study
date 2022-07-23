@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/styles/withStyles";
-import { withRouter } from "react-router-dom";
+import { withRouter, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -8,12 +8,13 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import InstructionDialog from "./dialogs/InstructionDialog";
 import SwipeDialog from "./dialogs/SwipeDialog";
+import Wizard from "./Wizard";
 
 import Topbar from "./Topbar";
 
 const backgroundShape = require("../images/shape.svg");
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.grey["100"],
@@ -98,20 +99,26 @@ class Main extends Component {
 
   componentDidMount() {}
 
-  openDialog = event => {
+  openDialog = (event) => {
     this.setState({ learnMoredialog: true });
   };
 
-  dialogClose = event => {
+  dialogClose = (event) => {
     this.setState({ learnMoredialog: false });
   };
 
-  openGetStartedDialog = event => {
+  openGetStartedDialog = (event) => {
     this.setState({ getStartedDialog: true });
   };
 
-  closeGetStartedDialog = event => {
+  closeGetStartedDialog = (event) => {
     this.setState({ getStartedDialog: false });
+  };
+
+  handleEnter = (path) => {
+    if (path) {
+      this.props.history.push(path);
+    }
   };
 
   render() {
@@ -137,19 +144,21 @@ class Main extends Component {
                       color="secondary"
                       gutterBottom
                     >
-                      First title
+                      前端盒子
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      A first title style <br /> with two lines
+                      一个进行前端学习评估的盒子
+                      <br /> 主要进行学习宽度和深度的评估
                     </Typography>
                   </div>
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button
+                      onClick={() => this.handleEnter("/wizard")}
                       color="primary"
                       variant="contained"
                       className={classes.actionButtom}
                     >
-                      Learn more
+                      进入
                     </Button>
                   </div>
                 </Paper>

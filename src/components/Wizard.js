@@ -10,11 +10,11 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
+import { FormGroup } from "@material-ui/core";
+import { FormControlLabel } from "@material-ui/core";
+import { Checkbox } from "@material-ui/core/";
+import { MenuItem } from "@material-ui/core/";
+import { FormControl } from "@material-ui/core/";
 import Select from "@material-ui/core/Select";
 import Back from "./common/Back";
 
@@ -24,7 +24,7 @@ const backgroundShape = require("../images/shape.svg");
 const numeral = require("numeral");
 numeral.defaultFormat("0,000");
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.primary["A100"],
@@ -92,8 +92,15 @@ const styles = theme => ({
   }
 });
 
+const getQuestions = () => {
+  return [
+    { Q: "- 说一下HTTP2.0 、HTTP的区别？", A: "John Doe" },
+    { Q: "- 说一下HTTP2.0有什么新特性？", A: "Tokyo" }
+  ];
+};
+
 const getSteps = () => {
-  return ["Info", "Bank", "Loan details", "Terms", "Confirm", "Done"];
+  return ["网络", "浏览器", "JavaScript", "CSS", "Vue", "系统设计"];
 };
 
 class Wizard extends Component {
@@ -108,13 +115,13 @@ class Wizard extends Component {
   componentDidMount() {}
 
   handleNext = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       activeStep: state.activeStep + 1
     }));
   };
 
   handleBack = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       activeStep: state.activeStep - 1
     }));
   };
@@ -125,11 +132,11 @@ class Wizard extends Component {
     });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleTerms = event => {
+  handleTerms = (event) => {
     this.setState({ termsChecked: event.target.checked });
   };
 
@@ -146,7 +153,7 @@ class Wizard extends Component {
     return "Next";
   }
 
-  goToDashboard = event => {
+  goToDashboard = (event) => {
     const queryString = this.props.location.search;
 
     this.props.history.push({
@@ -161,6 +168,7 @@ class Wizard extends Component {
     const parsed = queryString ? qs.parse(queryString) : {};
     const steps = getSteps();
     const { activeStep } = this.state;
+    const question = getQuestions();
 
     return (
       <React.Fragment>
@@ -183,7 +191,7 @@ class Wizard extends Component {
                       activeStep={activeStep}
                       alternativeLabel
                     >
-                      {steps.map(label => {
+                      {steps.map((label) => {
                         return (
                           <Step key={label}>
                             <StepLabel>{label}</StepLabel>
@@ -195,7 +203,7 @@ class Wizard extends Component {
                   {activeStep === 0 && (
                     <div className={classes.bigContainer}>
                       <Paper className={classes.paper}>
-                        <div className={classes.topInfo}>
+                        {/* <div className={classes.topInfo}>
                           <div>
                             <Typography
                               variant="subtitle1"
@@ -217,32 +225,26 @@ class Wizard extends Component {
                               Edit
                             </Button>
                           </div>
-                        </div>
-                        <Grid item container xs={12}>
-                          <Grid item xs={6}>
-                            <Typography
-                              style={{ textTransform: "uppercase" }}
-                              color="secondary"
-                              gutterBottom
-                            >
-                              User
-                            </Typography>
-                            <Typography variant="h5" gutterBottom>
-                              John Doe
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Typography
-                              style={{ textTransform: "uppercase" }}
-                              color="secondary"
-                              gutterBottom
-                            >
-                              City
-                            </Typography>
-                            <Typography variant="h5" gutterBottom>
-                              Tokyo
-                            </Typography>
-                          </Grid>
+                        </div> */}
+                        <Grid item container xs={24}>
+                          <div>
+                            {question.map((item, i) => {
+                              return (
+                                <Grid key={i} item xs={12}>
+                                  <Typography
+                                    style={{ textTransform: "uppercase" }}
+                                    color="secondary"
+                                    gutterBottom
+                                  >
+                                    {item.Q}
+                                  </Typography>
+                                  <Typography variant="h5" gutterBottom>
+                                    {item.A}
+                                  </Typography>
+                                </Grid>
+                              );
+                            })}
+                          </div>
                         </Grid>
                       </Paper>
                     </div>

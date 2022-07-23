@@ -18,7 +18,7 @@ import Menu from "./Menu";
 
 const logo = require("../images/logo.svg");
 
-const styles = theme => ({
+const styles = (theme) => ({
   appBar: {
     position: "relative",
     boxShadow: "none",
@@ -88,11 +88,11 @@ class Topbar extends Component {
     this.setState({ value });
   };
 
-  mobileMenuOpen = event => {
+  mobileMenuOpen = (event) => {
     this.setState({ menuDrawer: true });
   };
 
-  mobileMenuClose = event => {
+  mobileMenuClose = (event) => {
     this.setState({ menuDrawer: false });
   };
 
@@ -130,14 +130,14 @@ class Topbar extends Component {
                 <Typography variant="h6" color="inherit" noWrap>
                   <Link to="/" className={classes.link}>
                     <img width={20} src={logo} alt="" />
-                    <span className={classes.tagline}>Material Sense</span>
+                    <span className={classes.tagline}>学习盒子</span>
                   </Link>
                 </Typography>
               </div>
               {!this.props.noTabs && (
                 <React.Fragment>
                   <div className={classes.productLogo}>
-                    <Typography>A material UI Template</Typography>
+                    <Typography>一个可以进行学习评估的盒子</Typography>
                   </div>
                   <div className={classes.iconContainer}>
                     <IconButton

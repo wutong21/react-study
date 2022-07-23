@@ -1,5 +1,5 @@
 {
-  "name": "material-sense",
+  "name": "react-study",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://alexanmtz.github.io/material-sense",
@@ -41,5 +41,7 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/material-sense"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
