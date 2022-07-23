@@ -3,10 +3,6 @@
 - Alexandre Magno (http://ahorta.io)
 - Victoria Botelho Martins (https://contech-cbs.web.app/)
 
-### Help to fund this project
-
-https://opencollective.com/material-sense
-
 #### Projects using this template:
 
 - Ahorta Client: https://github.com/worknenjoy/ahorta-client
