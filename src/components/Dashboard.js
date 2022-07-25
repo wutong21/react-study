@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import withStyles from "@material-ui/styles/withStyles";
+import { withStyles } from "@material-ui/styles/";
 import { withRouter, Link } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Slider from "@material-ui/core/Slider";
-import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
+import { CssBaseline } from "@material-ui/core/";
+import { Paper } from "@material-ui/core/";
+import { Typography } from "@material-ui/core/";
+import { Grid } from "@material-ui/core/";
+import { Slider } from "@material-ui/core/";
+import { Button } from "@material-ui/core/";
+import { Avatar } from "@material-ui/core/";
 import SimpleLineChart from "./SimpleLineChart";
 import Months from "./common/Months";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
@@ -20,7 +20,7 @@ numeral.defaultFormat("0,000");
 
 const backgroundShape = require("../images/shape.svg");
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.grey["100"],

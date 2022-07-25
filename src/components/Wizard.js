@@ -6,16 +6,10 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import { FormGroup } from "@material-ui/core";
-import { FormControlLabel } from "@material-ui/core";
-import { Checkbox } from "@material-ui/core/";
-import { MenuItem } from "@material-ui/core/";
-import { FormControl } from "@material-ui/core/";
-import Select from "@material-ui/core/Select";
+import { TextField } from "@material-ui/core/";
+import { Stepper } from "@material-ui/core/";
+import { Step } from "@material-ui/core/";
+import { StepLabel } from "@material-ui/core/";
 import Back from "./common/Back";
 
 const qs = require("query-string");
@@ -92,15 +86,47 @@ const styles = (theme) => ({
   }
 });
 
-const getQuestions = () => {
+const getQuestionsInternet = () => {
   return [
     { Q: "- 说一下HTTP2.0 、HTTP的区别？", A: "John Doe" },
     { Q: "- 说一下HTTP2.0有什么新特性？", A: "Tokyo" }
   ];
 };
 
+const getQuestionsBrowser = () => {
+  return [
+    { Q: "- 垃圾回收在什么时候会发生？", A: "John Doe" },
+    { Q: "- 跨域问题怎么处理？", A: "Tokyo" },
+    { Q: "- 你对缓存有什么了解？", A: "Tokyo" },
+    { Q: "- 如果命中强缓存返回的状态码是什么？", A: "Tokyo" }
+  ];
+};
+
+const getQuestionsJs = () => {
+  return [
+    { Q: "- 如何判断类型？判断类型的方法有几种？", A: "John Doe" },
+    {
+      Q: "- 存储基本类型和引用类型时，是存在什么地方，存储的是什么? ",
+      A: "Tokyo"
+    },
+    { Q: "- setTimeout与正常进程的执行顺序?", A: "Tokyo" },
+    { Q: "- 看代码说输出 Promise链式调用与正常进程的执行顺序？", A: "Tokyo" },
+    { Q: "- 讲一下宏任务和微任务？", A: "Tokyo" },
+    { Q: "- 讲一下主进程发生阻塞的原因？", A: "Tokyo" }
+  ];
+};
+
+const getQuestionsVue = () => {
+  return [
+    { Q: "- v-model 的双向绑定是怎么实现 ？", A: "John Doe" },
+    { Q: "- v-bind 和v-model有什么区别？", A: "Tokyo" },
+    { Q: "- .sysc的主要特征是什么？ ", A: "Tokyo" },
+    { Q: "- 父子组件的调用顺序？ ", A: "Tokyo" }
+  ];
+};
+
 const getSteps = () => {
-  return ["网络", "浏览器", "JavaScript", "CSS", "Vue", "系统设计"];
+  return ["网络", "浏览器", "JavaScript", "CSS", "Vue"];
 };
 
 class Wizard extends Component {
@@ -142,12 +168,9 @@ class Wizard extends Component {
 
   stepActions() {
     if (this.state.activeStep === 3) {
-      return "Accept";
+      return "Next";
     }
     if (this.state.activeStep === 4) {
-      return "Send";
-    }
-    if (this.state.activeStep === 5) {
       return "Done";
     }
     return "Next";
@@ -168,7 +191,10 @@ class Wizard extends Component {
     const parsed = queryString ? qs.parse(queryString) : {};
     const steps = getSteps();
     const { activeStep } = this.state;
-    const question = getQuestions();
+    const questionInternet = getQuestionsInternet();
+    const questionBrowser = getQuestionsBrowser();
+    const questionJs = getQuestionsJs();
+    const questionVue = getQuestionsVue();
 
     return (
       <React.Fragment>
@@ -203,48 +229,32 @@ class Wizard extends Component {
                   {activeStep === 0 && (
                     <div className={classes.bigContainer}>
                       <Paper className={classes.paper}>
-                        {/* <div className={classes.topInfo}>
-                          <div>
-                            <Typography
-                              variant="subtitle1"
-                              style={{ fontWeight: "bold" }}
-                              gutterBottom
-                            >
-                              Information
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                              General information about the service
-                            </Typography>
-                          </div>
-                          <div>
-                            <Button
-                              variant="outlined"
-                              size="large"
-                              className={classes.outlinedButtom}
-                            >
-                              Edit
-                            </Button>
-                          </div>
-                        </div> */}
                         <Grid item container xs={24}>
-                          <div>
-                            {question.map((item, i) => {
-                              return (
-                                <Grid key={i} item xs={12}>
-                                  <Typography
-                                    style={{ textTransform: "uppercase" }}
-                                    color="secondary"
-                                    gutterBottom
-                                  >
-                                    {item.Q}
-                                  </Typography>
-                                  <Typography variant="h5" gutterBottom>
-                                    {item.A}
-                                  </Typography>
-                                </Grid>
-                              );
-                            })}
-                          </div>
+                          {questionInternet.map((item, i) => {
+                            return (
+                              <Grid key={i} item xs={12}>
+                                <Typography
+                                  style={{ textTransform: "uppercase" }}
+                                  color="secondary"
+                                  gutterBottom
+                                >
+                                  {item.Q}
+                                </Typography>
+
+                                <Typography variant="h5" gutterBottom>
+                                  <TextField
+                                    fullWidth
+                                    id="standard-multiline-static"
+                                    label="答案"
+                                    multiline
+                                    rows={6}
+                                    defaultValue=""
+                                    variant="standard"
+                                  />
+                                </Typography>
+                              </Grid>
+                            );
+                          })}
                         </Grid>
                       </Paper>
                     </div>
@@ -252,255 +262,63 @@ class Wizard extends Component {
                   {activeStep === 1 && (
                     <div className={classes.smallContainer}>
                       <Paper className={classes.paper}>
-                        <div>
-                          <div style={{ marginBottom: 32 }}>
-                            <Typography
-                              variant="subtitle1"
-                              style={{ fontWeight: "bold" }}
-                              gutterBottom
-                            >
-                              Bank information
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                              Select account to receive the money
-                            </Typography>
-                          </div>
-                          <div style={{ marginBottom: 32 }}>
-                            <Typography
-                              style={{ textTransform: "uppercase" }}
-                              color="secondary"
-                              gutterBottom
-                            >
-                              Bank
-                            </Typography>
-                            <Typography variant="h5" gutterBottom>
-                              N26
-                            </Typography>
-                          </div>
-                          <div>
-                            <Typography
-                              style={{
-                                textTransform: "uppercase",
-                                marginBottom: 20
-                              }}
-                              color="secondary"
-                              gutterBottom
-                            >
-                              Receiving account
-                            </Typography>
-                            <FormControl
-                              variant="outlined"
-                              className={classes.formControl}
-                            >
-                              <Select
-                                value={this.state.receivingAccount}
-                                onChange={this.handleChange}
-                                input={
-                                  <OutlinedInput
-                                    labelWidth={this.state.labelWidth}
-                                    name="receivingAccount"
+                        <Grid item container xs={24}>
+                          {questionBrowser.map((item, i) => {
+                            return (
+                              <Grid key={i} item xs={12}>
+                                <Typography
+                                  style={{ textTransform: "uppercase" }}
+                                  color="secondary"
+                                  gutterBottom
+                                >
+                                  {item.Q}
+                                </Typography>
+                                <Typography variant="h5" gutterBottom>
+                                  <TextField
+                                    fullWidth
+                                    id="standard-multiline-static"
+                                    label="答案"
+                                    multiline
+                                    rows={6}
+                                    defaultValue=""
+                                    variant="standard"
                                   />
-                                }
-                              >
-                                <MenuItem value="">
-                                  <em></em>
-                                </MenuItem>
-                                <MenuItem value={"0297 00988200918"}>
-                                  First account
-                                </MenuItem>
-                                <MenuItem value={"0235 00235233332"}>
-                                  Second account
-                                </MenuItem>
-                                <MenuItem value={"1256 00864222212"}>
-                                  Third account
-                                </MenuItem>
-                              </Select>
-                            </FormControl>
-                          </div>
-                        </div>
+                                </Typography>
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
                       </Paper>
                     </div>
                   )}
                   {activeStep === 2 && (
                     <div className={classes.bigContainer}>
                       <Paper className={classes.paper}>
-                        <div className={classes.topInfo}>
-                          <div>
-                            <Typography
-                              variant="subtitle1"
-                              style={{ fontWeight: "bold" }}
-                              gutterBottom
-                            >
-                              Details
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                              We need some details about any information
-                            </Typography>
-                          </div>
-                          <div>
-                            <Button
-                              variant="outlined"
-                              size="large"
-                              className={classes.outlinedButtom}
-                            >
-                              Edit
-                            </Button>
-                          </div>
-                        </div>
-                        <div className={classes.borderColumn}>
-                          <Grid
-                            item
-                            container
-                            xs={12}
-                            style={{ marginBottom: 32 }}
-                          >
-                            <Grid item xs={6}>
-                              <Typography
-                                style={{ textTransform: "uppercase" }}
-                                color="secondary"
-                                gutterBottom
-                              >
-                                Amount
-                              </Typography>
-                              <Typography variant="h5" gutterBottom>
-                                {parsed
-                                  ? numeral(parsed.amount).format()
-                                  : "75,000"}{" "}
-                                DKK
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Typography
-                                style={{ textTransform: "uppercase" }}
-                                color="secondary"
-                                gutterBottom
-                              >
-                                Total fees
-                              </Typography>
-                              <Typography variant="h5" gutterBottom>
-                                0 DKK
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                          <Grid item container xs={12}>
-                            <Grid item xs={6}>
-                              <Typography
-                                style={{ textTransform: "uppercase" }}
-                                color="secondary"
-                                gutterBottom
-                              >
-                                Total price
-                              </Typography>
-                              <Typography variant="h5" gutterBottom>
-                                {parsed
-                                  ? numeral(parsed.interest).format()
-                                  : "6,600"}{" "}
-                                USD
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Typography
-                                style={{ textTransform: "uppercase" }}
-                                color="secondary"
-                                gutterBottom
-                              >
-                                Total cost
-                              </Typography>
-                              <Typography variant="h5" gutterBottom>
-                                {parsed
-                                  ? numeral(parsed.cost).format()
-                                  : "81,600"}{" "}
-                                USD
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </div>
-                        <Grid item container xs={12}>
-                          <Grid
-                            item
-                            container
-                            xs={12}
-                            style={{ marginBottom: 32 }}
-                          >
-                            <Grid item xs={6}>
-                              <Typography
-                                style={{ textTransform: "uppercase" }}
-                                color="secondary"
-                                gutterBottom
-                              >
-                                How often
-                              </Typography>
-                              <Typography variant="h5" gutterBottom>
-                                Once a month
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Typography
-                              style={{ textTransform: "uppercase" }}
-                              color="secondary"
-                              gutterBottom
-                            >
-                              When to start
-                            </Typography>
-                            <Typography variant="h5" gutterBottom>
-                              01 February 2019
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Typography
-                              style={{ textTransform: "uppercase" }}
-                              color="secondary"
-                              gutterBottom
-                            >
-                              When it ends?
-                            </Typography>
-                            <Typography variant="h5" gutterBottom>
-                              01 May 2019
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                        <Grid item container xs={12} style={{ marginTop: 24 }}>
-                          <Grid item xs={6}>
-                            <Typography
-                              style={{
-                                textTransform: "uppercase",
-                                marginBottom: 20
-                              }}
-                              color="secondary"
-                              gutterBottom
-                            >
-                              Destination account
-                            </Typography>
-                            <FormControl
-                              variant="outlined"
-                              className={classes.formControl}
-                            >
-                              <Select
-                                value={this.state.repaimentAccount}
-                                onChange={this.handleChange}
-                                input={
-                                  <OutlinedInput
-                                    labelWidth={this.state.labelWidth}
-                                    name="repaimentAccount"
+                        <Grid item container xs={24}>
+                          {questionJs.map((item, i) => {
+                            return (
+                              <Grid key={i} item xs={12}>
+                                <Typography
+                                  style={{ textTransform: "uppercase" }}
+                                  color="secondary"
+                                  gutterBottom
+                                >
+                                  {item.Q}
+                                </Typography>
+                                <Typography variant="h5" gutterBottom>
+                                  <TextField
+                                    fullWidth
+                                    id="standard-multiline-static"
+                                    label="答案"
+                                    multiline
+                                    rows={6}
+                                    defaultValue=""
+                                    variant="standard"
                                   />
-                                }
-                              >
-                                <MenuItem value="">
-                                  <em></em>
-                                </MenuItem>
-                                <MenuItem value={"0297 00988200918"}>
-                                  Account one
-                                </MenuItem>
-                                <MenuItem value={"0235 00235233332"}>
-                                  Account two
-                                </MenuItem>
-                                <MenuItem value={"1256 00864222212"}>
-                                  Other account
-                                </MenuItem>
-                              </Select>
-                            </FormControl>
-                          </Grid>
+                                </Typography>
+                              </Grid>
+                            );
+                          })}
                         </Grid>
                       </Paper>
                     </div>
@@ -508,140 +326,54 @@ class Wizard extends Component {
                   {activeStep === 3 && (
                     <div className={classes.bigContainer}>
                       <Paper className={classes.paper}>
-                        <div style={{ marginBottom: 24 }}>
-                          <Typography
-                            variant="subtitle1"
-                            style={{ fontWeight: "bold" }}
-                            gutterBottom
-                          >
-                            Terms & Conditions
-                          </Typography>
-                          <Typography variant="body1" gutterBottom>
-                            Please read through and accept the terms &
-                            conditions
-                          </Typography>
-                        </div>
-                        <div
-                          style={{
-                            height: 330,
-                            padding: 16,
-                            border: "2px solid #ccc",
-                            borderRadius: "3px",
-                            overflowY: "scroll"
-                          }}
+                        <Typography
+                          style={{ textTransform: "uppercase" }}
+                          color="secondary"
+                          gutterBottom
                         >
-                          <Typography
-                            variant="subtitle1"
-                            style={{ fontWeight: "bold" }}
-                            gutterBottom
-                          >
-                            1. Your agreement
-                          </Typography>
-                          <Typography variant="body1" gutterBottom>
-                            By using this Site, you agree to be bound by, and to
-                            comply with, these Terms and Conditions. If you do
-                            not agree to these Terms and Conditions, please do
-                            not use this site. PLEASE NOTE: We reserve the
-                            right, at our sole discretion, to change, modify or
-                            otherwise alter these Terms and Conditions at any
-                            time. Unless otherwise indicated, amendments will
-                            become effective immediately. Please review these
-                            Terms and Conditions periodically. Your continued
-                            use of the Site following the posting of changes
-                            and/or modifications will constitute your acceptance
-                            of the revised Terms and Conditions and the
-                            reasonableness of these standards for notice of
-                            changes. For your information, this page was last
-                            updated as of the date at the top of these terms and
-                            conditions.
-                          </Typography>
-                          <Typography
-                            variant="subtitle1"
-                            style={{ fontWeight: "bold" }}
-                            gutterBottom
-                          >
-                            2. Privacy
-                          </Typography>
-                          <Typography variant="body1" gutterBottom>
-                            Please review our Privacy Policy, which also governs
-                            your visit to this Site, to understand our
-                            practices. By using this Site, you agree to be bound
-                            by, and to comply with, these Terms and Conditions.
-                            If you do not agree to these Terms and Conditions,
-                            please do not use this site. PLEASE NOTE: We reserve
-                            the right, at our sole discretion, to change, modify
-                            or otherwise alter these Terms and Conditions at any
-                            time. Unless otherwise indicated, amendments will
-                            become effective immediately. Please review these
-                            Terms and Conditions periodically. Your continued
-                            use of the Site following the posting of changes
-                            and/or modifications will constitute your acceptance
-                            of the revised Terms and Conditions and the
-                            reasonableness of these standards for notice of
-                            changes. For your information, this page was last
-                            updated as of the date at the top of these terms and
-                            conditions.
-                          </Typography>
-                        </div>
-                        <FormGroup row>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={this.state.termsChecked}
-                                onChange={this.handleTerms}
-                                value="check"
-                              />
-                            }
-                            label="I have read and understood the terms & conditions"
-                          />
-                        </FormGroup>
+                          题目如下图所示
+                          <img src={require("../images/CSS.png")} alt="" />
+                        </Typography>
+                        <Typography variant="h5" gutterBottom>
+                          ...
+                        </Typography>
                       </Paper>
                     </div>
                   )}
                   {activeStep === 4 && (
                     <div className={classes.smallContainer}>
                       <Paper className={classes.paper}>
-                        <Grid item container xs={12}>
-                          <Grid item xs={12}>
-                            <Typography
-                              variant="subtitle1"
-                              style={{ fontWeight: "bold" }}
-                              gutterBottom
-                            >
-                              Sign & confirm
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                              Sign and confirm your agreement
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Paper>
-                    </div>
-                  )}
-                  {(activeStep === 5 || activeStep === 6) && (
-                    <div className={classes.smallContainer}>
-                      <Paper className={classes.paper}>
-                        <Grid item container xs={12}>
-                          <Grid item xs={12}>
-                            <Typography variant="subtitle1" gutterBottom>
-                              Congratulations{" "}
-                              <span role="img" aria-label="conrats emoji">
-                                🎉
-                              </span>
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                              We have now a positive response
-                            </Typography>
-                            <Button fullWidth variant="outlined">
-                              Download the service invoice or whatever
-                            </Button>
-                          </Grid>
+                        <Grid item container xs={24}>
+                          {questionVue.map((item, i) => {
+                            return (
+                              <Grid key={i} item xs={12}>
+                                <Typography
+                                  style={{ textTransform: "uppercase" }}
+                                  color="secondary"
+                                  gutterBottom
+                                >
+                                  {item.Q}
+                                </Typography>
+                                <Typography variant="h5" gutterBottom>
+                                  <TextField
+                                    fullWidth
+                                    id="standard-multiline-static"
+                                    label="答案"
+                                    multiline
+                                    rows={6}
+                                    defaultValue=""
+                                    variant="standard"
+                                  />
+                                </Typography>
+                              </Grid>
+                            );
+                          })}
                         </Grid>
                       </Paper>
                     </div>
                   )}
                   <div className={classes.flexBar}>
-                    {activeStep !== 5 && (
+                    {activeStep !== 4 && (
                       <Button
                         disabled={activeStep === 0}
                         onClick={this.handleBack}
@@ -655,12 +387,9 @@ class Wizard extends Component {
                       variant="contained"
                       color="primary"
                       onClick={
-                        activeStep !== 5 ? this.handleNext : this.goToDashboard
+                        activeStep !== 4 ? this.handleNext : this.goToDashboard
                       }
                       size="large"
-                      disabled={
-                        this.state.activeStep === 3 && !this.state.termsChecked
-                      }
                     >
                       {this.stepActions()}
                     </Button>

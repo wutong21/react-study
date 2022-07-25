@@ -1,8 +1,3 @@
-### If you're using this template, please add below your project and send a PR:
-
-- Alexandre Magno (http://ahorta.io)
-- Victoria Botelho Martins (https://contech-cbs.web.app/)
-
 #### Projects using this template:
 
 - Ahorta Client: https://github.com/worknenjoy/ahorta-client
